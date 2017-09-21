@@ -1,4 +1,40 @@
 
-html, body, #root {
+html, body, .app, .app__layout {
   height: 100%;
+}
+
+.app__wrapper {
+  display: flex;
+  align-content: stretch;
+  justify-content: center;
+}
+
+.app__header {
+  display: flex;
+  padding: 0 20px;
+  height: auto;
+  flex-wrap: wrap;
+}
+
+.app__header h1 {
+  color: #fff;
+}
+
+.app__logo {
+  width: 50px;
+  min-width: 50px;
+  height: 50px;
+  margin: 7px 20px 7px 0;
+  background: url("./assets/svg/logo.svg");
+}
+
+.app__content {
+  background: #fff;
+  max-width: 800px;
+  width: 100%;
+  padding: 20px;
+}
+
+.app__footer {
+  text-align: center;
 }
