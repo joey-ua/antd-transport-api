@@ -5,8 +5,10 @@
   },
   "dependencies": {
     "antd": "^2.1.0",
+    "prop-types": "^15.5.10",
     "react": "^15.1.0",
-    "react-dom": "^15.1.0"
+    "react-dom": "^15.1.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "atool-build": "^0.9.0",
@@ -21,7 +23,7 @@
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.4.1",
+    "eslint-plugin-react": "^7.3.0",
     "expect": "^1.20.1",
     "pre-commit": "1.x",
     "redbox-react": "^1.2.6"
@@ -31,7 +33,7 @@
   ],
   "scripts": {
     "build": "atool-build",
-    "lint": "eslint --ext .js,.jsx src/",
+    "lint": "eslint --ext .js,.jsx /components",
     "start": "dora --plugins webpack",
     "test": "atool-test-mocha ./**/__tests__/*-test.js"
   }

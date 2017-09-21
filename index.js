@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Layout, Form } from 'antd';
+import SearchForm from './components/SearchForm';
 import './index.css';
-import { Layout, Input, Icon } from 'antd';
 
 const { Header, Content, Footer } = Layout;
+const ApiSearchForm = Form.create()(SearchForm);
 
 function App() {
   return (
@@ -14,7 +16,7 @@ function App() {
       </Header>
       <Content className="app__wrapper">
         <div className="app__content">
-          <Input suffix={<Icon type="search" />} placeholder="Please, enter the location" />
+          <ApiSearchForm />
         </div>
       </Content>
       <Footer className="app__footer">
