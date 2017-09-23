@@ -5,6 +5,7 @@
   },
   "dependencies": {
     "antd": "^2.1.0",
+    "google-map-react": "^0.24.0",
     "prop-types": "^15.5.10",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
@@ -19,11 +20,12 @@
     "babel-runtime": "^6.9.2",
     "dora": "0.4.x",
     "dora-plugin-webpack": "^0.8.1",
-    "eslint": "^3.8.1",
+    "eslint": "^3.19.0",
     "eslint-config-airbnb": "^12.0.0",
-    "eslint-plugin-import": "^2.0.1",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^7.3.0",
+    "eslint-plugin-css-modules": "^2.7.5",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
     "expect": "^1.20.1",
     "pre-commit": "1.x",
     "redbox-react": "^1.2.6"
@@ -33,7 +35,7 @@
   ],
   "scripts": {
     "build": "atool-build",
-    "lint": "eslint --ext .js,.jsx /components",
+    "lint": "eslint components",
     "start": "dora --plugins webpack",
     "test": "atool-test-mocha ./**/__tests__/*-test.js"
   }

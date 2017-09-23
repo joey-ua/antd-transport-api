@@ -1,0 +1,10 @@
+.Map__marker {
+  transform: translate(-100%, -50%);
+  color: #108ee9;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.Map__marker--center {
+  color: red;
+}

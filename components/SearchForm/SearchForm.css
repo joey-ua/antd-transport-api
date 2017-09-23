@@ -1,3 +1,7 @@
 .form__results > * {
   margin-top: 10px;
 }
+
+.form__map {
+  height: 300px;
+}

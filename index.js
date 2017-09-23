@@ -20,7 +20,7 @@ function App() {
         </div>
       </Content>
       <Footer className="app__footer">
-        Created by Andery Karpenko - 2017
+        Created by Andrey Karpenko - 2017
       </Footer>
     </Layout>
   );

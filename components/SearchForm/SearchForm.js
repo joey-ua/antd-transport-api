@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'whatwg-fetch';
-import { Form, Icon, Input, message, Alert } from 'antd';
+import { Form, Icon, Input, message, Button, Alert } from 'antd';
+import Map from '../Map';
 import './SearchForm.css';
 
 const FormItem = Form.Item;
@@ -19,6 +20,8 @@ class SearchForm extends React.Component {
       data: null,
       location: '',
       stops: [],
+      total: 0,
+      current: 1,
     };
   }
 
@@ -31,11 +34,15 @@ class SearchForm extends React.Component {
           .then(response => response.json())
           .then((response) => {
             if (response.status === 'OK') {
-              this.setState({ data: response.results[0] });
-              fetch(`http://transportapi.com/v3/uk/bus/stops/near.json?lat=${response.results[0].geometry.location.lat}lon=${response.results[0].geometry.location.lng}&api_key=6595ac315d0d3c31e2649cb82b5d885e&app_id=9f325c50`)
+              this.setState({ data: response });
+              fetch(`http://transportapi.com/v3/uk/bus/stops/near.json?lat=${response.results[0].geometry.location.lat}&lon=${response.results[0].geometry.location.lng}&api_key=6595ac315d0d3c31e2649cb82b5d885e&app_id=9f325c50`)
                 .then(transport => transport.json())
                 .then((transport) => {
-                  this.setState({ stops: transport.total === 0 ? null : transport.stops });
+                  this.setState({
+                    stops: transport.total === 0 ? null : transport.stops,
+                    total: transport.total,
+                    current: 1,
+                  });
                 });
               message.success('Success search');
             } else {
@@ -43,6 +50,19 @@ class SearchForm extends React.Component {
             }
           });
       }
+    });
+  };
+
+  loadMore = () => {
+    const page = this.state.current + 1;
+    fetch(`http://transportapi.com/v3/uk/bus/stops/near.json?lat=${this.state.data.results[0].geometry.location.lat}&lon=${this.state.data.results[0].geometry.location.lng}&api_key=6595ac315d0d3c31e2649cb82b5d885e&app_id=9f325c50&page=${page}`)
+      .then(transport => transport.json())
+      .then((transport) => {
+        this.setState({ stops: this.state.stops.concat(transport.stops) });
+      });
+    this.setState({
+      current: page,
+      zoom: this.state.zoom - 1,
     });
   };
 
@@ -64,12 +84,25 @@ class SearchForm extends React.Component {
         </FormItem>
         {this.state.data ?
           <div className="form__results">
-            Results for {this.state.data.formatted_address}:
+            Results for {this.state.data.results[0].formatted_address}:
+            {this.state.total > this.state.current * 25 &&
+              <span><b> {this.state.current * 25}</b> loaded of</span>
+            }
+            <b> {this.state.total}</b> results
             {this.state.stops !== null ?
-              this.state.stops.map(
-                stop => <Alert key={stop.atcocode} message={stop.name} type="info" closable />,
-              )
-            : <Alert message="No bus stops find" type="error" />}
+              <div>
+                <div className="form__map">
+                  <Map
+                    stops={this.state.stops}
+                    lat={this.state.data.results[0].geometry.location.lat}
+                    lng={this.state.data.results[0].geometry.location.lng}
+                  />
+                </div>
+              </div>
+            : <Alert message="Sorry, we cannot find any bus stops in this area" type="error" />}
+            {this.state.total > this.state.current * 25 &&
+              <Button type="primary" onClick={this.loadMore}>Load more</Button>
+            }
           </div>
           : ''}
       </Form>
