@@ -18,8 +18,8 @@ class Map extends PureComponent {
   static propTypes = {
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired,
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
+    width: PropTypes.number,
+    height: PropTypes.number,
     stops: PropTypes.array.isRequired,
   };
 

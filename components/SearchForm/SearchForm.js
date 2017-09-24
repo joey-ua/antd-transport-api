@@ -44,10 +44,16 @@ class SearchForm extends React.Component {
                     total: transport.total,
                     current: 1,
                   });
+                }).catch((error) => {
+                  message.error('Failed to load bus stops data');
+                  console.error(error);
                 });
             } else {
               message.error('Failed to search');
             }
+          }).catch((error) => {
+            message.error('Failed to search');
+            console.error(error);
           });
       }
     });
@@ -62,6 +68,9 @@ class SearchForm extends React.Component {
           stops: this.state.stops.concat(transport.stops),
           current: page,
         });
+      }).catch((error) => {
+        message.error('Failed to load bus stops data');
+        console.error(error);
       });
   };
 
