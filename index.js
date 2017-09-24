@@ -11,7 +11,7 @@ const info = () => (
   Modal.info({
     title: 'Transport API',
     content: (
-      <div>
+      <div className="app__modalContent">
         <p>
           This application was created to make some experience in interaction with different APIs
         </p>

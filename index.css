@@ -61,6 +61,14 @@ body,
   margin-top: 20px;
 }
 
+.app__modalContent * {
+  line-height: 24px;
+}
+
+.app__modalContent h3 {
+  margin: 6px 0;
+}
+
 @media (max-width: 320px) {
   .app__header {
     justify-content: center;
