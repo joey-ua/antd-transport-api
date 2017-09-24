@@ -1,5 +1,5 @@
 .Map__marker {
-  transform: translate(-100%, -50%);
+  transform: translate(-50%, -100%);
   color: #108ee9;
   font-size: 20px;
   cursor: pointer;

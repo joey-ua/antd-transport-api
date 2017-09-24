@@ -14,9 +14,9 @@ const CustomMarker = ({ text, description, cssClass }) => (
 
 class Map extends PureComponent {
   static propTypes = {
-    lat: PropTypes.string.isRequired,
-    lng: PropTypes.string.isRequired,
-    stops: PropTypes.object.isRequired,
+    lat: PropTypes.number.isRequired,
+    lng: PropTypes.number.isRequired,
+    stops: PropTypes.array.isRequired,
   };
   render() {
     const centerLat = this.props.lat;

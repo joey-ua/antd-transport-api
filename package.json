@@ -28,14 +28,18 @@
     "eslint-plugin-react": "^7.1.0",
     "expect": "^1.20.1",
     "pre-commit": "1.x",
-    "redbox-react": "^1.2.6"
+    "redbox-react": "^1.2.6",
+    "stylelint": "^7.13.0",
+    "stylelint-config-standard": "^16.0.0"
   },
   "pre-commit": [
     "lint"
   ],
   "scripts": {
     "build": "atool-build",
-    "lint": "eslint components",
+    "lint:js": "eslint ./",
+    "lint:css": "stylelint \"./**/*.{css,less,scss,sss}\"",
+    "lint": "yarn run lint:js && yarn run lint:css",
     "start": "dora --plugins webpack",
     "test": "atool-test-mocha ./**/__tests__/*-test.js"
   }

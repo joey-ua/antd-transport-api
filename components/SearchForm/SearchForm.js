@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'whatwg-fetch';
-import { Form, Icon, Input, message, Button, Alert } from 'antd';
+import { Form, Icon, Input, message, Button, Alert, Spin } from 'antd';
 import Map from '../Map';
 import './SearchForm.css';
 
@@ -30,7 +30,7 @@ class SearchForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err) => {
       if (!err) {
-        fetch(`http://maps.google.com/maps/api/geocode/json?address=${this.state.location}&sensor=false`)
+        fetch(`http://maps.google.com/maps/api/geocode/json?address=${this.state.location}&sensor=false&language=en`)
           .then(response => response.json())
           .then((response) => {
             if (response.status === 'OK') {
@@ -92,6 +92,7 @@ class SearchForm extends React.Component {
             {this.state.stops !== null ?
               <div>
                 <div className="form__map">
+                  <Spin className="form__mapSpin" />
                   <Map
                     stops={this.state.stops}
                     lat={this.state.data.results[0].geometry.location.lat}

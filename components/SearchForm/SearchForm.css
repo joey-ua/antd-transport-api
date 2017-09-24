@@ -4,4 +4,13 @@
 
 .form__map {
   height: 300px;
+  position: relative;
+  background: #eee;
+}
+
+.form__mapSpin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
