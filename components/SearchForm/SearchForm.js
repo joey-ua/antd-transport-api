@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import 'whatwg-fetch';
 import { Form, Icon, Input, message, Button, Alert, Spin } from 'antd';
+import ContainerDimensions from 'react-container-dimensions';
 import Map from '../Map';
 import './SearchForm.css';
 
@@ -44,7 +45,6 @@ class SearchForm extends React.Component {
                     current: 1,
                   });
                 });
-              message.success('Success search');
             } else {
               message.error('Failed to search');
             }
@@ -58,12 +58,11 @@ class SearchForm extends React.Component {
     fetch(`http://transportapi.com/v3/uk/bus/stops/near.json?lat=${this.state.data.results[0].geometry.location.lat}&lon=${this.state.data.results[0].geometry.location.lng}&api_key=6595ac315d0d3c31e2649cb82b5d885e&app_id=9f325c50&page=${page}`)
       .then(transport => transport.json())
       .then((transport) => {
-        this.setState({ stops: this.state.stops.concat(transport.stops) });
+        this.setState({
+          stops: this.state.stops.concat(transport.stops),
+          current: page,
+        });
       });
-    this.setState({
-      current: page,
-      zoom: this.state.zoom - 1,
-    });
   };
 
   render() {
@@ -90,15 +89,15 @@ class SearchForm extends React.Component {
             }
             <b> {this.state.total}</b> results
             {this.state.stops !== null ?
-              <div>
-                <div className="form__map">
-                  <Spin className="form__mapSpin" />
+              <div className="form__map">
+                <Spin className="form__mapSpin" size="large" />
+                <ContainerDimensions>
                   <Map
                     stops={this.state.stops}
                     lat={this.state.data.results[0].geometry.location.lat}
                     lng={this.state.data.results[0].geometry.location.lng}
                   />
-                </div>
+                </ContainerDimensions>
               </div>
             : <Alert message="Sorry, we cannot find any bus stops in this area" type="error" />}
             {this.state.total > this.state.current * 25 &&

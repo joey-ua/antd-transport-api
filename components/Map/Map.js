@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import GoogleMapReact from 'google-map-react';
+import { fitBounds } from 'google-map-react/utils';
 import { Popover, Icon } from 'antd';
 import './Map.css';
 
@@ -11,17 +12,44 @@ const CustomMarker = ({ text, description, cssClass }) => (
 );
 
 /* eslint-disable react/forbid-prop-types */
+/* global google */
 
 class Map extends PureComponent {
   static propTypes = {
     lat: PropTypes.number.isRequired,
     lng: PropTypes.number.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
     stops: PropTypes.array.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      center: { lat: this.props.lat, lng: this.props.lng },
+      zoom: 15,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const bounds = new google.maps.LatLngBounds();
+
+    nextProps.stops.forEach((p) => {
+      bounds.extend(new google.maps.LatLng(p.latitude, p.longitude));
+    });
+
+    const { center, zoom } = fitBounds({
+      se: { lat: bounds.f.b, lng: bounds.b.f },
+      nw: { lat: bounds.f.f, lng: bounds.b.b },
+    }, {
+      width: this.props.width,
+      height: this.props.height,
+    });
+
+    this.setState({ center, zoom });
+  }
+
   render() {
-    const centerLat = this.props.lat;
-    const centerLng = this.props.lng;
-    const Center = { lat: centerLat, lng: centerLng };
     const GoogleMapsMarkers = this.props.stops.map(marker => (
       <CustomMarker
         key={`marker_${marker.atcocode}`}
@@ -35,7 +63,8 @@ class Map extends PureComponent {
 
     return (
       <GoogleMapReact
-        center={Center}
+        center={this.state.center}
+        zoom={this.state.zoom}
         defaultZoom={15}
         options={{ fullscreenControl: false }}
         bootstrapURLKeys={{
@@ -45,8 +74,8 @@ class Map extends PureComponent {
       >
         {GoogleMapsMarkers}
         <CustomMarker
-          lat={centerLat}
-          lng={centerLng}
+          lat={this.props.lat}
+          lng={this.props.lng}
           text="Location center"
           description="Defined by the search"
           cssClass="Map__marker Map__marker--center"
