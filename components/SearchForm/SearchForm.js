@@ -20,7 +20,7 @@ class SearchForm extends React.Component {
     this.state = {
       data: null,
       location: '',
-      stops: [],
+      stops: null,
       total: 0,
       current: 1,
     };
